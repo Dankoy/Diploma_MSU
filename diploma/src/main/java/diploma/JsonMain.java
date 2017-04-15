@@ -113,7 +113,6 @@ public class JsonMain {
 		testOutput();
 	    testCollecting();  
 	    
-	    
 	    System.out.print(coordinates.isEmpty());
 	}
 	
