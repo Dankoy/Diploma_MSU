@@ -13,7 +13,7 @@ import com.google.gson.stream.MalformedJsonException;
 
 public class JsonMain {
 
-
+	 static List<Coordinate> coordinates = new ArrayList<>();
 	
 	private static final String ITEMS_NAME = "items";
 	private static final String LATITUDE_PROPERTY = "latitude";
@@ -100,18 +100,20 @@ public class JsonMain {
 	    readAndParse((lat, lng) -> System.out.println("(" + lat + "; " + lng + ")"));
 	}
 
-	// Collecting all coordinates in ArrayList.
+     // Collecting all coordinates in ArrayList.
 	// Will JVM support increase? Perhaps, but not fact.
 	private static void testCollecting()
 	        throws IOException {
-	    final List<Coordinate> coordinates = new ArrayList<>();
+	  //  List<Coordinate> coordinates = new ArrayList<>();
 	    readAndParse((lat, lng) -> coordinates.add(new Coordinate(lat, lng)));
-	    System.out.println(coordinates.size());
+	    System.out.println(coordinates.size());   
 	}
 	
 	public static void main(String[] args) throws IOException {
 		testOutput();
-	    testCollecting();
+	    testCollecting();  
+	    
+	    System.out.print(coordinates.isEmpty());
 	}
 	
 }
