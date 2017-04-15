@@ -1,11 +1,15 @@
 package diploma;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.MalformedJsonException;
 
-import diploma2.ICoordinatesListener;
 
 public class JsonMain {
 
@@ -89,6 +93,35 @@ public class JsonMain {
 	    // Also close last ] è }
 	    jsonReader.endArray();
 	    jsonReader.endObject();
+	}
+	
+	private static void readAndParse(final ICoordinatesListener listener)
+	        throws IOException {
+	    try ( final JsonReader jsonReader = new JsonReader(new BufferedReader(
+	    		new InputStreamReader(
+	    				new FileInputStream("C:\\Users\\Evgeny\\git\\Diploma_MSU\\diploma\\json\\rus-crash.json")))) ) {
+	        parseCrashCoordinates(jsonReader, listener);
+	    }
+	}
+	
+	// Output testing in console
+	private static void testOutput()
+	        throws IOException {
+	    readAndParse((lat, lng) -> System.out.println("(" + lat + "; " + lng + ")"));
+	}
+
+	// Collecting all coordinates in ArrayList.
+	// Will JVM support increase? Perhaps, but not fact.
+	private static void testCollecting()
+	        throws IOException {
+	    final List<Coordinate> coordinates = new ArrayList<>();
+	    readAndParse((lat, lng) -> coordinates.add(new Coordinate(lat, lng)));
+	    System.out.println(coordinates.size());
+	}
+	
+	public static void main(String[] args) throws IOException {
+		testOutput();
+	    testCollecting();
 	}
 	
 }
