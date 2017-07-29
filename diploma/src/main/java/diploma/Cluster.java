@@ -5,18 +5,18 @@ import java.util.List;
 
 public class Cluster {
 	
-		public List points;
+		public List<Point> points;
 		public Point centroid;
 		public int id;
 		
 		//Creates a new Cluster
 		public Cluster(int id) {
 			this.id = id;
-			this.points = new ArrayList();
+			this.points = new ArrayList<Point>();
 			this.centroid = null;
 		}
 	 
-		public List getPoints() {
+		public List<Point> getPoints() {
 			return points;
 		}
 		
@@ -24,7 +24,7 @@ public class Cluster {
 			points.add(point);
 		}
 	 
-		public void setPoints(List points) {
+		public void setPoints(List<Point> points) {
 			this.points = points;
 		}
 	 
