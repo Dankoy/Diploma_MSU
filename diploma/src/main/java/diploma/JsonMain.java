@@ -72,7 +72,7 @@ public class JsonMain {
 	            }
 	            
 	        // Check if the object contains the exactly coordinates for crash with pedestrian
-	        if (name.contains("Наезд на пешехода")) {
+	        if (name.contains("Наезд на пешехода") || name.contains("Наезд на велосипедиста")) {
 	        	// Just delegate our coordinates in handler
 		        listener.onCoordinates(latitude, longitude);
 	        }
