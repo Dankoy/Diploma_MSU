@@ -89,7 +89,7 @@ public class JsonMain {
 	        throws IOException {
 	    try ( final JsonReader jsonReader = new JsonReader(new BufferedReader(
 	    		new InputStreamReader(
-	    				new FileInputStream("C:\\Users\\Evgeny\\git\\Diploma_MSU\\diploma\\json\\rus-crash.json")))) ) {
+	    				new FileInputStream("json/2016-crash.json")))) ) {
 	        parseCrashCoordinates(jsonReader, listener);
 	    }
 	}
