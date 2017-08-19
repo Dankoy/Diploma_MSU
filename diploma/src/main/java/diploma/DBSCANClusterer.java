@@ -1,6 +1,7 @@
 package diploma;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 
 public class DBSCANClusterer {
@@ -13,6 +14,14 @@ public class DBSCANClusterer {
 	private HashSet<Coordinate> visitedPoints = new HashSet<>();
 	
 	public static final double R = 6372.8; // Earth Radius In kilometers
+	
+	
+	// Create object with set values of maximum Distance and minimum elements in cluster. This object will be performed on clustering method
+	public DBSCANClusterer(final Collection<Coordinate> inputValues, int minNumElem, int maxDistance) {
+		setInputValues(inputValues);
+		setMinimalNumbersOfMembersInCluster(minNumElem);
+		setMaxDistance(maxDistance);
+	}
 	
 	// Haversine Distance Formula
 	// Take two points(Coordinates) to calculate distance between them
@@ -34,6 +43,21 @@ public class DBSCANClusterer {
 		double a = Math.pow(Math.sin(dLat / 2),2) + Math.pow(Math.sin(dLon / 2),2) * Math.cos(lat1) * Math.cos(lat2);
         double c = 2 * Math.asin(Math.sqrt(a));
         return R * c;
+	}
+	
+	// Method to take coordinates to new ArrayList
+	public void setInputValues(final Collection<Coordinate> collection) {
+		this.inputValues = new ArrayList<Coordinate>(collection);
+	}
+	
+	// Sets the minimal number of points in cluster.
+	public void setMinimalNumbersOfMembersInCluster(final int num) {
+		this.minimumNumbersOfClusterMembers = num;
+	}
+	
+	// Sets the maximum distance between points 
+	public void setMaxDistance(final double maxDistance) {
+		this.epsilon = maxDistance;
 	}
 	
 }
