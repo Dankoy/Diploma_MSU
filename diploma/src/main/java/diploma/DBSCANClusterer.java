@@ -60,4 +60,18 @@ public class DBSCANClusterer {
 		this.epsilon = maxDistance;
 	}
 	
+	// Method is looking for points which are situated close to each other (less than maxDistance value)
+	// and if it's true then add them in neighbour array
+	private ArrayList<Coordinate> getNeighbours(final Coordinate inputValue) {
+		ArrayList<Coordinate> neighbours = new ArrayList<Coordinate>();
+		for(int i=0; i<inputValues.size(); i++) {
+			Coordinate candidate = inputValues.get(i);
+			
+			if(calculateDistance(inputValue, candidate) <= epsilon) {
+				neighbours.add(candidate);
+			}
+		}
+		return neighbours;
+	}
+	
 }
