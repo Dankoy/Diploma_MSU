@@ -74,4 +74,14 @@ public class DBSCANClusterer {
 		return neighbours;
 	}
 	
+	
+	private ArrayList<Coordinate> mergeTwoNeighbours(final ArrayList<Coordinate> neighbours1, final ArrayList<Coordinate> neighbours2) {
+		for(int i=0; i<neighbours2.size(); i++) {
+			Coordinate tempPoint = neighbours2.get(i);
+			if( !(neighbours1.contains(tempPoint)) ) {
+				neighbours1.add(tempPoint);
+			}
+		}
+		return neighbours1;
+	}
 }
