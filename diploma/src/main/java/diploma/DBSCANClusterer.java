@@ -84,4 +84,41 @@ public class DBSCANClusterer {
 		}
 		return neighbours1;
 	}
+	
+	public ArrayList<ArrayList<Coordinate>> performClustering() {
+		ArrayList<ArrayList<Coordinate>> resultList = new ArrayList<ArrayList<Coordinate>>();
+		
+		visitedPoints.clear();
+		
+		ArrayList<Coordinate> neighbours;
+		int index = 0;
+		
+		while(inputValues.size() > index) {
+			Coordinate p = inputValues.get(index);
+			
+			if(!(visitedPoints.contains(p))) {
+				visitedPoints.add(p);
+				
+				neighbours = getNeighbours(p);
+				
+				if(neighbours.size() > minimumNumbersOfClusterMembers) {
+					int ind=0;
+					while(neighbours.size() > ind) {
+						Coordinate r = neighbours.get(ind);
+						if(!visitedPoints.contains(r)) {
+							visitedPoints.add(r);
+							ArrayList<Coordinate> individualNeighbours = getNeighbours(r);
+							if(individualNeighbours.size() > minimumNumbersOfClusterMembers) {
+								neighbours = mergeTwoNeighbours(neighbours, individualNeighbours);
+							}
+						}
+						ind++;
+					}
+					resultList.add(neighbours);
+				}
+			}
+			index++;
+		}
+		return resultList;
+	}
 }
