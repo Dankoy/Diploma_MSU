@@ -110,10 +110,30 @@ public class JsonMain {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		testOutput();
+		//testOutput();
 	    testCollecting();  
 	    
 	    System.out.print(coordinates.isEmpty());
+	    
+	 // Initialize our clustering class with locations, minimum points in cluster and max Distance
+	    DBSCANClusterer clusterer = new DBSCANClusterer(coordinates, 2, 2);
+	    
+	    ArrayList<ArrayList<Coordinate>> cluster_raw = clusterer.performClustering();
+	    testClusterOutput(cluster_raw);
+	    
+	    ArrayList<Cluster> clusters = new ArrayList<>();
+	    for(int i=0; i < cluster_raw.size(); i++) {
+	    	Cluster c = new Cluster(cluster_raw.get(i));
+	    	clusters.add(c);
+	    }
+	    
+	}
+	
+	// Test console output of clusterer_raw
+	private static void testClusterOutput(ArrayList<ArrayList<Coordinate>> cl) throws IOException {
+		for (int i = 0; i < cl.size(); i++) {
+			System.out.println(cl.get(i));
+		}
 	}
 	
 }
