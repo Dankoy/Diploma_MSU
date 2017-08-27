@@ -10,6 +10,9 @@ import java.util.List;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.MalformedJsonException;
 
+import diploma.Cluster;
+import diploma.DBSCANClusterer;
+
 
 public class JsonMain {
 
@@ -119,13 +122,65 @@ public class JsonMain {
 	    DBSCANClusterer clusterer = new DBSCANClusterer(coordinates, 2, 2);
 	    
 	    ArrayList<ArrayList<Coordinate>> cluster_raw = clusterer.performClustering();
-	    testClusterOutput(cluster_raw);
+	//    testClusterOutput(cluster_raw);
 	    
 	    ArrayList<Cluster> clusters = new ArrayList<>();
 	    for(int i=0; i < cluster_raw.size(); i++) {
 	    	Cluster c = new Cluster(cluster_raw.get(i));
 	    	clusters.add(c);
 	    }
+	    
+	    
+	  //Start building the HTML for display in browser
+	    	    String html = "<!DOCTYPE html>\n" + 
+	            		"<html>\n" + 
+	            		"  <head>\n" + 
+	            		"    <title>Simple Map</title>\n" + 
+	            		"    <meta name=\"viewport\" content=\"initial-scale=1.0\">\n" + 
+	            		"    <meta charset=\"utf-8\">\n" + 
+	            		"    <style>\n" + 
+	            		"      /* Always set the map height explicitly to define the size of the div\n" + 
+	            		"       * element that contains the map. */\n" + 
+	            		"      #map {\n" + 
+	            		"        height: 100%;\n" + 
+	            		"      }\n" + 
+	            		"      /* Optional: Makes the sample page fill the window. */\n" + 
+	            		"      html, body {\n" + 
+	            		"        height: 100%;\n" + 
+	            		"        margin: 0;\n" + 
+	            		"        padding: 0;\n" + 
+	            		"      }\n" + 
+	            		"    </style>\n" + 
+	            		"	<script src='https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js'></script>"+
+	            		"  </head>\n" + 
+	            		"  <body>\n" + 
+	            		"    <div id=\"map\"></div>\n" + 
+	            		"    <script>\n" + 
+	            		"      var map;\n" + 
+	            		"      function initMap() {\n" + 
+	            		"        map = new google.maps.Map(document.getElementById('map'), {\n" + 
+	            		"          zoom: 3,\n" +
+	            		"			center: new google.maps.LatLng(70.503758, 88.513333)" +
+	            		"        });\n" +
+	            		"		var markers=[];var bounds = new google.maps.LatLngBounds(); ";
+	    	    
+	    	    // Iterate through the clusters and generate javascript code for adding markers with numbers
+	            	for(int i=0;i<clusters.size();i++) {
+	            		html += clusters.get(i).getMarkerString() + "\n" ;
+	            	}
+	            
+	            html += "      };"+ 
+	            		"    </script>\n" + 
+	            		"    <script src=\"https://maps.googleapis.com/maps/api/js?callback=initMap\"\n" + 
+	            		"    async defer></script>\n" + 
+	            		"  </body>\n" + 
+	            		"</html>";
+	    	    
+	            
+	            // Instantiate our class for opening a browser and rendering the map
+	            MapRenderer mr = new MapRenderer();
+	    	    mr.setHtml(html);
+	    	    mr.showMap();
 	    
 	}
 	

@@ -48,4 +48,14 @@ public class Cluster {
 		return icon;
 	}
 	
+	public String getMarkerString() {
+		String js_code = " myLatLng = new google.maps.LatLng( "+this.center.getLatitude() +","+ this.center.getLongitude() + ");\n"
+				+" markers.push( new google.maps.Marker({ "
+			      +"position: myLatLng,"
+			      +" map: map,"
+			      + "icon:  \" " + getSVGIcon() + " \" "
+		    		+" }) ); ";
+		
+		return js_code;
+	}
 }
