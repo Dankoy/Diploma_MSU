@@ -15,6 +15,10 @@ public class MapRenderer {
 	// Holds the complete html code that has to be rendered
 	String html;
 	
+	public MapRenderer() {
+		
+	}
+	
 	public void setHtml(String html) {
 		this.html = html;
 	}
