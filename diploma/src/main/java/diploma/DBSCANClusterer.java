@@ -75,7 +75,7 @@ public class DBSCANClusterer {
 	}
 	
 	
-	private ArrayList<Coordinate> mergeTwoNeighbours(final ArrayList<Coordinate> neighbours1, final ArrayList<Coordinate> neighbours2) {
+	private ArrayList<Coordinate> mergeRightToLeftCollection(final ArrayList<Coordinate> neighbours1, final ArrayList<Coordinate> neighbours2) {
 		for(int i=0; i<neighbours2.size(); i++) {
 			Coordinate tempPoint = neighbours2.get(i);
 			if( !(neighbours1.contains(tempPoint)) ) {
@@ -109,7 +109,7 @@ public class DBSCANClusterer {
 							visitedPoints.add(r);
 							ArrayList<Coordinate> individualNeighbours = getNeighbours(r);
 							if(individualNeighbours.size() > minimumNumbersOfClusterMembers) {
-								neighbours = mergeTwoNeighbours(neighbours, individualNeighbours);
+								neighbours = mergeRightToLeftCollection(neighbours, individualNeighbours);
 							}
 						}
 						ind++;
