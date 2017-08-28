@@ -13,35 +13,34 @@ import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 public class MapRenderer {
 	
 	// Holds the complete html code that has to be rendered
-	String html;
+String html;
 	
 	public MapRenderer() {
 		
 	}
 	
-	public void setHtml(String html) {
+	public void setHtml (String html) {
 		this.html = html;
 	}
 	
 	public void showMap() {
 		Browser browser = new Browser();
-		BrowserView view = new BrowserView();
-		
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		
-		frame.add(view, BorderLayout.CENTER);
-		frame.setSize(1000, 800);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-		
-		browser.addConsoleListener(new ConsoleListener() {
-			public void onMessage(ConsoleEvent event) {
-				System.out.println("Level: " + event.getLevel());
-				System.out.println("Message: " + event.getMessage());
-			}
-		});
-		
-		browser.loadHTML(html);
+	    BrowserView view = new BrowserView(browser);
+	    
+	    JFrame frame = new JFrame("JxBrowser - Hello World");
+	    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.add(view, BorderLayout.CENTER);
+        frame.setSize(1000, 800);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        
+        browser.addConsoleListener(new ConsoleListener() {
+            public void onMessage(ConsoleEvent event) {
+                System.out.println("Level: " + event.getLevel());
+                System.out.println("Message: " + event.getMessage());
+            }
+        });
+        
+        browser.loadHTML( html );
 	}
 }
