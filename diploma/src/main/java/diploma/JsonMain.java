@@ -182,10 +182,13 @@ public class JsonMain {
 	    
         
         // Instantiate our class for opening a browser and rendering the map
-        MapRenderer mr = new MapRenderer();
-	    mr.setHtml(html);
-	    mr.showMap();
+//        MapRenderer mr = new MapRenderer();
+//	    mr.setHtml("map.html");
+//	    mr.showMap();
 	    
+	    GoogleMap gm = new GoogleMap();
+	    gm.setHtml(html);
+	    GoogleMap.launch(GoogleMap.class, args);
 	}
 	
 	// Test console output of clusterer_raw

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        html { height: 100% }
+        body { height: 100%; margin: 0; padding: 0 }
+        #map_canvas { height: 100% }
+    </style>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=***&sensor=false">
+    </script>
+    <script>
+var map;
+function loadmap(){
+ 
+  var options = {
+      zoom: 16,
+      center: new google.maps.LatLng(51.507222, -0.1275),
+      mapTypeId: google.maps.MapTypeId.SATELLITE
+  }
+  map = new google.maps.Map(document.getElementById("map_canvas"), options);
+}
+ 
+</script>
+</head>
+<body onload="loadmap()>
+<div id="map_canvas" style="width:100%; height:100%"></div>
+</body>
+</html>
