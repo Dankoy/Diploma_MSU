@@ -35,12 +35,13 @@ public class GoogleMap extends Application {
 	}
 	
 
-	@Override public void start(Stage stage) {
-//		 URL url = this.getClass().getResource(("/html/map.html"));
+/*	@Override 
+	public void start(Stage stage) {
+		 URL url = this.getClass().getResource(("/html/map.html"));
 		 WebView webView = new WebView();
          final WebEngine webEngine = webView.getEngine();
          //   webEngine.load(html);
-         webEngine.load(html); 
+         webEngine.load(getClass().getResource("/diploma/html/map.html").toString()); 
         
         // create scene
         stage.setTitle("Web Map");
@@ -49,7 +50,40 @@ public class GoogleMap extends Application {
         // show stage
         stage.show();
 
-    }
+    } 
+ */
+	
+	 private Scene scene;
+	  MyBrowser myBrowser;
+	
+	  @Override
+	  public void start(Stage primaryStage) {
+	      primaryStage.setTitle("WebMap");
+	     
+	      myBrowser = new MyBrowser();
+	      scene = new Scene(myBrowser, 640, 480);
+	     
+	      primaryStage.setScene(scene);
+	      primaryStage.show();
+	  }
+	 
+	  class MyBrowser extends Region{
+	     
+	      HBox toolbar;
+	     
+	      WebView webView = new WebView();
+	      WebEngine webEngine = webView.getEngine();
+	     
+	      public MyBrowser(){
+	         
+	          final URL urlGoogleMaps = getClass().getResource("/html/map.html");
+	          webEngine.load(urlGoogleMaps.toExternalForm());
+	 
+	          getChildren().add(webView);
+	         
+	      }
+	     
+	  }
  
  //   static { // use system proxy settings when standalone application
 //        System.setProperty("java.net.useSystemProxies", "true");

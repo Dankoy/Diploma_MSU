@@ -2,31 +2,30 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Map</title>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <style type="text/css">
         html { height: 100% }
         body { height: 100%; margin: 0; padding: 0 }
         #map_canvas { height: 100% }
     </style>
-    <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=***&sensor=false">
+    <script async defer type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?callback=loadmap">
     </script>
-    <script>
+</head>
+<body onload="loadmap()">
+<div id="map_canvas" style="width:100%; height:100%"></div>
+<script>
 var map;
 function loadmap(){
  
   var options = {
       zoom: 16,
-      center: new google.maps.LatLng(51.507222, -0.1275),
+      center: new google.maps.LatLng(55.7558, 37.6173),
       mapTypeId: google.maps.MapTypeId.SATELLITE
   }
   map = new google.maps.Map(document.getElementById("map_canvas"), options);
 }
- 
 </script>
-</head>
-<body onload="loadmap()>
-<div id="map_canvas" style="width:100%; height:100%"></div>
 </body>
 </html>

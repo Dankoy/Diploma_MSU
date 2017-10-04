@@ -13,6 +13,7 @@ import com.google.gson.stream.MalformedJsonException;
 
 import diploma.Cluster;
 import diploma.DBSCANClusterer;
+import javafx.application.Application;
 
 
 public class JsonMain {
@@ -155,7 +156,7 @@ public class JsonMain {
         		"        padding: 0;\n" + 
         		"      }\n" + 
         		"    </style>\n" + 
-        		"	<script src='https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js'></script>"+
+    //    		"	<script src='https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js'></script>"+
         		"  </head>\n" + 
         		"  <body>\n" + 
         		"    <div id=\"map\"></div>\n" + 
@@ -188,7 +189,7 @@ public class JsonMain {
 	    
 	    GoogleMap gm = new GoogleMap();
 	    gm.setHtml(html);
-	    GoogleMap.launch(GoogleMap.class, args);
+	    Application.launch(GoogleMap.class);
 	}
 	
 	// Test console output of clusterer_raw
