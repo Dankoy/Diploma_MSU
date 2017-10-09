@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+        <style type="text/css">
+        html { height: 100% }
+        body { height: 100%; margin: 0; padding: 0 }
+        #map { height: 100% }
+    </style>
+    <script async defer type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?callback=loadmap">
+    </script>
+	</head>
+  <body onload="initMap()" style="width:100%; height:100%">
+    <div id="map"></div>
+    <script>
+      var map;
+      function initMap() {
+        var options = {
+            zoom: 11,
+			center: new google.maps.LatLng(55.7558, 37.6173),
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+         }
+        
+        map = new google.maps.Map(document.getElementById("map"), options);
+		var markers=[];var bounds = new google.maps.LatLngBounds();
+		
+		}
+	</script>
+  </body>
+</html>
