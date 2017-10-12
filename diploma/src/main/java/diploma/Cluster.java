@@ -56,6 +56,13 @@ public class Cluster {
 			      + "icon:  \" " + getSVGIcon() + " \" "
 		    		+" }) ); ";
 		
+
+		
 		return js_code;
 	}
+	
+	public String getLocationAsArray() {
+		return "[" + this.center.getLatitude() + "," + this.center.getLongitude() + ", '" + this.numOfPoints + "' ]";	
+	}
+	
 }
