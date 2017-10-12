@@ -1,9 +1,13 @@
 package diploma;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +18,13 @@ import com.google.gson.stream.MalformedJsonException;
 import diploma.Cluster;
 import diploma.DBSCANClusterer;
 import javafx.application.Application;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 
-public class JsonMain {
+public class JsonMain extends Application {
 
 	 static List<Coordinate> coordinates = new ArrayList<>();
 	
@@ -24,6 +32,7 @@ public class JsonMain {
 	private static final String LATITUDE_PROPERTY = "latitude";
 	private static final String LONGITUDE_PROPERTY = "longitude";
 	private static final String CRASH_NAME = "em_type_name";
+
 	
 	static void parseCrashCoordinates(final JsonReader jsonReader, final ICoordinatesListener listener)
 	        throws IOException {	
@@ -94,7 +103,7 @@ public class JsonMain {
 	        throws IOException {
 	    try ( final JsonReader jsonReader = new JsonReader(new BufferedReader(
 	    		new InputStreamReader(
-	    				new FileInputStream("json/2015-crash.json")))) ) {
+	    				new FileInputStream("json/rus-crash.json")))) ) {
 	        parseCrashCoordinates(jsonReader, listener);
 	    }
 	}
@@ -114,14 +123,19 @@ public class JsonMain {
 	    System.out.println(coordinates.size());   
 	}
 	
-	public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args) {
+        launch(args);
+    }
+	
+	public void start(Stage stage) throws IOException, URISyntaxException {
 		//testOutput();
 	    testCollecting();  
 	    
-	    System.out.print(coordinates.isEmpty());
 	    
 	 // Initialize our clustering class with locations, minimum points in cluster and max Distance
 	    DBSCANClusterer clusterer = new DBSCANClusterer(coordinates, 2, 2);
+
+	    
 	    
 	    //Perform the clustering and save the returned clusters as a list
 	    ArrayList<ArrayList<Coordinate>> clusters_raw= clusterer.performClustering();
@@ -134,6 +148,9 @@ public class JsonMain {
 	    		Cluster c = new Cluster(clusters_raw.get(i));
 	    		clusters.add(c);
 	    }
+	    System.out.println(clusters.size());
+//	    testClusterOutput(clusters_raw);
+
 	    
 	    
 	    //Start building the HTML for display in browser
@@ -143,53 +160,62 @@ public class JsonMain {
         		"    <title>Simple Map</title>\n" + 
         		"    <meta name=\"viewport\" content=\"initial-scale=1.0\">\n" + 
         		"    <meta charset=\"utf-8\">\n" + 
-        		"    <style>\n" + 
-        		"      /* Always set the map height explicitly to define the size of the div\n" + 
-        		"       * element that contains the map. */\n" + 
-        		"      #map {\n" + 
-        		"        height: 100%;\n" + 
-        		"      }\n" + 
-        		"      /* Optional: Makes the sample page fill the window. */\n" + 
-        		"      html, body {\n" + 
-        		"        height: 100%;\n" + 
-        		"        margin: 0;\n" + 
-        		"        padding: 0;\n" + 
-        		"      }\n" + 
+        		"      <style type=\"text/css\">\n" +
+        		"           html { height: 100% }\n" +
+        		"           body { height: 100%; margin: 0; padding: 0 }\n" +
+        		"           #map { height: 100% }\n" +
         		"    </style>\n" + 
-    //    		"	<script src='https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js'></script>"+
+//        		"	<script src='https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js'></script>"+
+				"    <script async defer type=\"text/javascript\" src=\"https://maps.googleapis.com/maps/api/js?callback=initMap\"> </script>\n" +
         		"  </head>\n" + 
-        		"  <body>\n" + 
+        		
+        		"  <body onload=\"initMap()\" style=\"width:100%; height:100%\">\n" + 
         		"    <div id=\"map\"></div>\n" + 
+        		
         		"    <script>\n" + 
         		"      var map;\n" + 
         		"      function initMap() {\n" + 
-        		"        map = new google.maps.Map(document.getElementById('map'), {\n" + 
-        		"          zoom: 3,\n" +
-        		"			center: new google.maps.LatLng(70.503758, 88.513333)" +
-        		"        });\n" +
-        		"		var markers=[];var bounds = new google.maps.LatLngBounds(); ";
-	    
+        		
+        		"        var options = {\n" +
+        		"            zoom: 9,\n" +
+        		"            center: new google.maps.LatLng(55.7558, 37.6173),\n" +
+        		"            mapTypeId: google.maps.MapTypeId.ROADMAP\n" +
+        		"        }\n" +
+        		
+        		"        map = new google.maps.Map(document.getElementById(\"map\"), options);\n" + 
+        		
+        		"		var markers=[];var bounds = new google.maps.LatLngBounds();\n ";
+//	    System.out.println(html);   
 	    // Iterate through the clusters and generate javascript code for adding markers with numbers
         	for(int i=0;i<clusters.size();i++) {
         		html += clusters.get(i).getMarkerString() + "\n" ;
         	}
         
-        html += "      };"+ 
+        html += "      }\n"+ 
         		"    </script>\n" + 
-        		"    <script src=\"https://maps.googleapis.com/maps/api/js?callback=initMap\"\n" + 
-        		"    async defer></script>\n" + 
         		"  </body>\n" + 
         		"</html>";
-	    
+		 
+        FileOutputStream fos = new FileOutputStream("C:/Users/Evgeny/git/Diploma_MSU/diploma/html/writer.html");
+ //       bw = new BufferedWriter(new FileWriter("C:/Users/Evgeny/git/Diploma_MSU/diploma/html/writer.html"));
+        PrintStream ps = new PrintStream(fos);
+        ps.println(html);
         
         // Instantiate our class for opening a browser and rendering the map
 //        MapRenderer mr = new MapRenderer();
 //	    mr.setHtml("map.html");
 //	    mr.showMap();
 	    
-	    GoogleMap gm = new GoogleMap();
+	    GoogleMap gm = new GoogleMap(clusterer);
 	    gm.setHtml(html);
-	    Application.launch(GoogleMap.class);
+//	    System.out.println(gm.hhh);
+//	    gm.launch(GoogleMap.class);
+	    
+	    stage.setTitle("Web Map");
+        Scene scene = new Scene((Parent) gm.getView(), 1000, 700, Color.web("#666970"));
+        stage.setScene(scene);
+        // show stage
+        stage.show();
 	}
 	
 	// Test console output of clusterer_raw
@@ -197,6 +223,6 @@ public class JsonMain {
 		for (int i = 0; i < cl.size(); i++) {
 			System.out.println(cl.get(i));
 		}
-	}
+	}	
 	
 }
