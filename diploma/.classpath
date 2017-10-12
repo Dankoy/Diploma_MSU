@@ -17,10 +17,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="src/main/java/resources/jxbrowser-6.14.2.jar"/>
-	<classpathentry kind="lib" path="src/main/java/resources/jxbrowser-mac-6.14.2.jar"/>
-	<classpathentry kind="lib" path="src/main/java/resources/jxbrowser-win32-6.14.2.jar"/>
-	<classpathentry kind="lib" path="src/main/java/resources/license.jar"/>
 	<classpathentry kind="lib" path="src/main/java/resources/jfxrt.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
