@@ -191,7 +191,6 @@ public class JsonMain extends Application {
         		html += clusters.get(i).getMarkerString() + "\n" ;
         	}
         
-        	
         html += "      }\n"+ 
         		"    </script>\n" + 
         		"  </body>\n" + 
