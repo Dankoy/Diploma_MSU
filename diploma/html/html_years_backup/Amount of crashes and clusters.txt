@@ -1,0 +1,24 @@
+Only Moscow 2015, 2016:
+	Crashes - 1000
+	Clusters - 72
+
+Only Moscow 2015:
+	Crashes - 511
+	Clusters - 52
+
+Only Moscow 2016:
+	Crashes - 458
+	Clusters - 47
+
+
+Full country 2015, 2016:
+	Crashes - 15221
+	Clusters - 953
+
+Full country 2015:
+	Crashes - 6549
+	Clusters - 356
+
+Full country 2016:
+	Crashes - 8130
+	Clusters - 442
