@@ -54,6 +54,29 @@ public class JsonMain extends Application {
 	    // And read every element of array
 	    while ( jsonReader.hasNext() ) {
 	    	
+	    	/* JSON META:
+	         * 	em_type_name; Type of crash; Вид ДТП; string
+	         *	em_moment_date; Crash date; Дата ДТП; string
+			 *	em_moment_time; Crash time; Время ДТП; string
+			 *	subject; Region of country; Субъект РФ; string
+			 *	longitude; Longitude; Долгота; number
+			 *	latitude;Latitude; Широта; number
+			 *	okato_code;OKATO; Код места ДТП по ОКАТО (конечного значения по иерархии территориальных единиц); string
+			 *	place_path;Place; Место возникновния ДТП; string
+			 *	road_significance_name; Type of road(federal,regional,etc..); Тип дороги(региональная,федеральная...); string
+			 *	road_name;Road name; Название дороги; string
+			 *	road_loc;Kilometer; Километр; string
+			 *	region_name;Area name; Название субъекта РФ; string
+			 *	light_type_name;Level of lighting; Условия освещения; string
+			 *	tr_area_state_name;Road condition; Состояние проезжей части; string
+			 *	transp_amount;Quantity of cars; Количество траспорта участвующего в ДТП; string
+			 *	suffer_amount;Quantity suffers; Количество пострадавших; string
+			 *	loss_amount;Total loss people; Общее количество погибших; string
+			 *	suffer_child_amount;Quantity suffer childs; Количество пострадавших детей; string
+			 *	loss_child_amount;Quantity loss childs; Количество погибших детей; string
+			 *	mt_rate_name;Change on road; Изменения в режиме движения; string
+	         */
+	    	
 	        // Judging by scheme every element of array is object
 	        jsonReader.beginObject();
 	        double latitude = 0;
@@ -77,13 +100,24 @@ public class JsonMain extends Application {
 		            // Save the type of crash    
 		            case CRASH_NAME:
 		            	name = jsonReader.nextString();
-		            	break;
+		            	break;		            	
 		            // Otherwise skip any values of property
 		            default:
 		                jsonReader.skipValue();
 		                break;
 		            }
 	            }
+	        
+	        /* That's what I need to refactor code:
+	         *  	em_moment_time - show time of crash
+	         *  	em_moment_date - show data of crash
+	         *   	subject - show where it happens ( Moscow or wherever )
+	         *   	transp_amount - amount of cars in crash
+	         *   	suffer_amount - amount of people who got suffered there
+	         *   	loss_amount - amount of killed people
+	         *   	suffer_child_amount - amount of suffered children in crash
+	         *   	loss_child_amount - amount of dead children
+	         */        
 	            
 	        // Check if the object contains the exactly coordinates for crash with pedestrian and bicycle drivers
 	        if (name.contains("Наезд на пешехода") || name.contains("Наезд на велосипедиста")) {
@@ -108,7 +142,7 @@ public class JsonMain extends Application {
 	        throws IOException {
 	    try ( final JsonReader jsonReader = new JsonReader(new BufferedReader(
 	    		new InputStreamReader(
-	    				new FileInputStream("json/2016-crash.json")))) ) {
+	    				new FileInputStream("json/rus-crash.json")))) ) {
 	        parseCrashCoordinates(jsonReader, listener);
 	    }
 	}
