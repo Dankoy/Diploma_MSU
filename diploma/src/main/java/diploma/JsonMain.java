@@ -33,7 +33,15 @@ public class JsonMain extends Application {
 	private static final String LONGITUDE_PROPERTY = "longitude";
 	private static final String CRASH_NAME = "em_type_name";
 	private static final String CITY = "subject";
-
+	private static final String DATE = "date";
+	private static final String TIME = "time";
+	private static final String TRANSP_AMOUNT = "transp_amount";
+	private static final String SUFFER_AMOUNT = "suffer_amount";
+	private static final String LOSS_AMOUNT = "loss_amount";
+	private static final String SUFFER_CHILD = "suffer_child";
+	private static final String LOSS_CHILD = "loss_child";
+	
+	
 	
 	static void parseCrashCoordinates(final JsonReader jsonReader, final ICoordinatesListener listener)
 	        throws IOException {	
@@ -48,6 +56,23 @@ public class JsonMain extends Application {
 	        // Not 'items'? No idea how to work with it, then better throw an exception
 	        throw new MalformedJsonException(ITEMS_NAME + " expected but was " + itemsName);
 	    }
+	    
+	    
+	    FileOutputStream fdate = new FileOutputStream("C:/Users/Evgeny/git/Diploma_MSU/diploma/html/date.txt");
+	    PrintStream pdate = new PrintStream(fdate);
+	    FileOutputStream ftime = new FileOutputStream("C:/Users/Evgeny/git/Diploma_MSU/diploma/html/time.txt");
+	    PrintStream ptime = new PrintStream(ftime);
+	    FileOutputStream ftrans = new FileOutputStream("C:/Users/Evgeny/git/Diploma_MSU/diploma/html/transp_amount.txt");
+	    PrintStream ptrans = new PrintStream(ftrans);
+	    FileOutputStream fsuffa = new FileOutputStream("C:/Users/Evgeny/git/Diploma_MSU/diploma/html/suffered_amount.txt");
+	    PrintStream psuffa = new PrintStream(fsuffa);
+	    FileOutputStream flossa = new FileOutputStream("C:/Users/Evgeny/git/Diploma_MSU/diploma/html/loss_amount.txt");
+	    PrintStream plossa = new PrintStream(flossa);
+	    FileOutputStream fcsuff = new FileOutputStream("C:/Users/Evgeny/git/Diploma_MSU/diploma/html/child_suffered.txt");
+	    PrintStream pcsuff = new PrintStream(fcsuff);
+	    FileOutputStream fcloss = new FileOutputStream("C:/Users/Evgeny/git/Diploma_MSU/diploma/html/child_loss.txt");
+	    PrintStream pcloss = new PrintStream(fcloss);
+	    
 	    
 	    // Looking for [
 	    jsonReader.beginArray();
@@ -84,6 +109,13 @@ public class JsonMain extends Application {
 	        double longitude = 0;
 	        String name = null;
 	        String city = null;
+	        String date = null;
+	        String time = null;
+	        String transp_amount = null;
+	        String suffer_amount = null;
+	        String loss_amount = null;
+	        String suffer_child = null;
+	        String loss_child = null;
 	        
 	        // Run through all properties of object
 	        while ( jsonReader.hasNext() ) {
@@ -105,6 +137,27 @@ public class JsonMain extends Application {
 		            	break;
 		            case CITY:
 		            	city = jsonReader.nextString();
+		            	break;
+		            case DATE:
+		            	date = jsonReader.nextString();
+		            	break;
+		            case TIME:
+		            	time = jsonReader.nextString();
+		            	break;
+		            case TRANSP_AMOUNT:
+		            	transp_amount = jsonReader.nextString();
+		            	break;
+		            case SUFFER_AMOUNT:
+		            	suffer_amount = jsonReader.nextString();
+		            	break;
+		            case LOSS_AMOUNT:
+		            	loss_amount = jsonReader.nextString();
+		            	break;
+		            case SUFFER_CHILD:
+		            	suffer_child = jsonReader.nextString();
+		            	break;
+		            case LOSS_CHILD:
+		            	loss_child = jsonReader.nextString();
 		            	break;
 		            // Otherwise skip any values of property
 		            default:
@@ -128,6 +181,16 @@ public class JsonMain extends Application {
 	        if (name.contains("Наезд на пешехода") || name.contains("Наезд на велосипедиста")) {
 	        	// Allow accidents only for Moscow
 	        	 if(city.contains("Москва") || city.contains("Московская область")  ) {
+	        		 
+	        		 pdate.println(date);
+	        		 ptime.println(time);
+	        		 ptrans.println(transp_amount);
+	        		 psuffa.println(suffer_amount);
+	        		 plossa.println(loss_amount);
+	        		 pcsuff.println(suffer_child);
+	        		 pcloss.println(loss_child);
+	        		 
+	        		 
 	        			// Just delegate our coordinates in handler
 	     		        listener.onCoordinates(latitude, longitude);
 	        	}	        	        	
